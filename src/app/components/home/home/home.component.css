@@ -1,0 +1,12 @@
+.redirect-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.redirect-container iframe {
+  width: 800px;
+  height: 600px;
+}

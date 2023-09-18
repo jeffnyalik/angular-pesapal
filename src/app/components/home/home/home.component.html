@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <form [formGroup]="form" (ngSubmit)="submitOrder()">
+
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" formControlName="amount" class="form-control">
+        </div><br>
+        <div formGroupName="billing_address">
+          <div  class="form-group">
+            <label for="first name">First Name</label>
+            <input type="text" id="first_name" formControlName="first_name" class="form-control">
+          </div><br>
+          <!-- <div  class="form-group">
+            <label for="first name">Phone Number</label>
+            <input type="text" id="phone_number" formControlName="phone_number" class="form-control">
+          </div><br> -->
+        </div>
+        <button type="submit" class="btn btn-primary rounded-0 btn-lg" [disabled]="orderSubmited">Proceed to pay</button>
+      </form>
+
+      <button type="submit" class="btn btn-info rounded-0 btn-sm" (click)="checkTransaction()">Check Transaction</button>
+    </div>
+    <div class="col-md-8">
+      <div class="redirect-container">
+        <ng-container *ngIf="redirectUrl">
+          <iframe [src]="redirectUrl" frameborder="0" width="100%" height="100%"></iframe>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
