@@ -12,6 +12,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { ProfileComponent } from './components/auth/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home/home.component';
+import { PesaFlowComponent } from './components/pesa-flow/pesa-flow.component';
 
 
 
@@ -30,7 +31,8 @@ export const authConfig: AuthConfig = {
     LoginComponent,
     ProfileComponent,
     CallBackComponent,
-    HomeComponent
+    HomeComponent,
+    PesaFlowComponent
   ],
   imports: [
     BrowserModule,

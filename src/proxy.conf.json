@@ -1,0 +1,11 @@
+{
+  "/pesaflow/*": {
+    "target": "https://test.pesaflow.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/pesaflow": "/PaymentAPI"
+    }
+  }
+}

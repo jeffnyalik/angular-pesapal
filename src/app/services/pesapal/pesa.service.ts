@@ -10,6 +10,21 @@ interface ApiResponse
   status: string;
 };
 
+interface PesaFlowResponse
+{
+  theaders: any;
+  status: number;
+  statusText: string;
+  url: string;
+  ok: boolean;
+  name: string;
+  message: string;
+  error: {
+    error: SyntaxError;
+    text: string;
+  };
+}
+
 interface TransactionStatusResponse
 {
   payment_method: string,
@@ -28,11 +43,16 @@ interface TransactionStatusResponse
   currency: string,
   status: string
 }
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
+  // Set the responseType to 'text' to treat the response as plain text (HTML)
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    responseType: 'text' as 'json' // Explicitly set responseType
+  };
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -45,7 +65,7 @@ export class PesaService {
   public SUBMIT_ORDER = "/submit-order";
   public TRANSACTION_STATUS = "/status?";
   public SAMPLE_URL = "/names";
-
+  public PESA_FLOW_IFRAME = "https://localhost:7099/api/pesaflow/pesaflow-checkout";
 
   constructor(private httpClient: HttpClient) { }
   public getNames(){
@@ -58,6 +78,10 @@ export class PesaService {
 
   public getTransactionStatus(orderTrackingId: string){
     return this.httpClient.get<TransactionStatusResponse>(`${this.PESAPAL_URI}/status?orderTrackingId=${orderTrackingId}`);
+  }
+
+  public submitPesa(model:any){
+    return this.httpClient.post(`${this.PESA_FLOW_IFRAME}`, model, httpOptions)
   }
 
 }
