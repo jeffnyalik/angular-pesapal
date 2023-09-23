@@ -65,7 +65,7 @@ export class PesaService {
   public SUBMIT_ORDER = "/submit-order";
   public TRANSACTION_STATUS = "/status?";
   public SAMPLE_URL = "/names";
-  public PESA_FLOW_IFRAME = "https://localhost:7099/api/pesaflow/pesaflow-checkout";
+  public PESA_FLOW_IFRAME = "https://localhost:7099/api/pesaflow/secure-hash";
 
   constructor(private httpClient: HttpClient) { }
   public getNames(){
