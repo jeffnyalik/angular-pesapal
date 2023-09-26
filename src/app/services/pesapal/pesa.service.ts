@@ -43,6 +43,17 @@ interface TransactionStatusResponse
   currency: string,
   status: string
 }
+
+interface PesaFlowPaymentResponse
+{
+  status: string,
+  ref_no: string,
+  name: string,
+  currency: string,
+  client_invoice_ref: string,
+  amount_paid: string,
+  amount_expected: string
+}
   // Set the responseType to 'text' to treat the response as plain text (HTML)
   const httpOptions = {
     headers: new HttpHeaders({
@@ -66,6 +77,7 @@ export class PesaService {
   public TRANSACTION_STATUS = "/status?";
   public SAMPLE_URL = "/names";
   public PESA_FLOW_IFRAME = "https://localhost:7099/api/pesaflow/secure-hash";
+  public PESA_FLOW_STATUS_URL = "https://localhost:7099/api/pesaflow/payment-status";
 
   constructor(private httpClient: HttpClient) { }
   public getNames(){
@@ -82,6 +94,10 @@ export class PesaService {
 
   public submitPesa(model:any){
     return this.httpClient.post(`${this.PESA_FLOW_IFRAME}`, model, httpOptions)
+  }
+
+  public checkPaymentStatus(model:any){
+    return this.httpClient.post<PesaFlowPaymentResponse>(`${this.PESA_FLOW_STATUS_URL}`, model);
   }
 
 }

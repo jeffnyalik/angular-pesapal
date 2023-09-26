@@ -13,32 +13,37 @@ import { PesaService } from 'src/app/services/pesapal/pesa.service';
 export class PesaFlowComponent {
   @ViewChild('iframe') iframe!: ElementRef;
   form: FormGroup;
+  checkForm: FormGroup;
+  responseStatus: any;
   model:any;
   responseData: SafeHtml | undefined
   htmlResponse: SafeHtml | null = null; // Initialize as null; // Store the HTML response
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
 
+  ngOnInit(): void {
+    //some code here
   }
   constructor(private pesaService: PesaService, private formBuilder: FormBuilder, private sanitizer: DomSanitizer){
     this.form = this.formBuilder.group({
       apiClientID: ['122'],
       serviceID: ['48766'],
       currency: ['KES'],
-      billRefNumber: ['ACA_INV_0010'],
+      billRefNumber: ['IPR_TR_001'],
       billDesc: ['Recordation'],
-      clientMSISDN: ['254716431039'],
+      clientMSISDN: [''],
       clientName: ["JON DOE"],
       clientIDNumber:["123456"],
       clientEmail: ["nyakeoloo@gmail.com"],
-      callBackURLOnSuccess:"https://localhost:7099/api/pesaflow/pesaflow-callback",
+      callBackURLOnSuccess:"http://localhost:4200/",
       amountExpected: [""],
-      notificationURL: ["https://localhost:7099/api/pesaflow/pesaflow-checkout"],
+      notificationURL: ["https://66f2-105-29-165-231.ngrok-free.app/api/pesaflow/notification-url"],
       pictureURL: ["https://example.com/client_image.jpg"],
-      // secureHash: ["NWQwYTI3MzIzNWM2M2ZkNWExNjBhNTYxNjIyNzQyMjg0ZmZmODU3MDEzYTdjYjk3NDdjYzg0MjEzOGExNTgyNg=="],
       format: ["JSON"],
-      sendSTK: ["true"]
+      sendSTK: ["false"]
+    });
+
+    this.checkForm = this.formBuilder.group({
+      api_client_id: ['122'],
+      ref_no: ['IPR_TR_001']
     })
   }
 
@@ -46,6 +51,24 @@ export class PesaFlowComponent {
     this.pesaService.submitPesa(this.form.value).subscribe((responseData) =>{
       this.responseData = responseData;
       this.responseData = this.sanitizer.bypassSecurityTrustHtml(responseData.toString());
+      console.log(this.responseData);
+    })
+  }
+
+  //Verify success/fail payment status
+  checkTransaction(){
+    this.pesaService.checkPaymentStatus(this.checkForm.value).subscribe((response) =>{
+      this.responseStatus = response;
+      if(this.responseStatus.status === "settled"){
+        console.log("Client Reference: ", this.responseStatus.client_invoice_ref);
+        console.log("Amount Paid: ", this.responseStatus.amount_paid);
+        console.log("Amount Expected: ", this.responseStatus.amount_expected);
+        console.log("Reference Number: ", this.responseStatus.ref_no);
+        console.log("Currency: ", this.responseStatus.currency);
+      }else{
+        console.log("AN ERROR HAS OCCURED");
+      }
+
     })
   }
 
