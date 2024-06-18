@@ -24,15 +24,15 @@ export class PesaFlowComponent {
   }
   constructor(private pesaService: PesaService, private formBuilder: FormBuilder, private sanitizer: DomSanitizer){
     this.form = this.formBuilder.group({
-      apiClientID: ['122'],
-      serviceID: ['48766'],
+      apiClientID: ['1330'],
+      serviceID: ['409092'],
       currency: ['KES'],
       billRefNumber: ['IPR_TR_001'],
-      billDesc: ['Recordation'],
+      billDesc: ['RecPayments'],
       clientMSISDN: [''],
       clientName: ["JON DOE"],
       clientIDNumber:["123456"],
-      clientEmail: ["nyakeoloo@gmail.com"],
+      clientEmail: ["nyaks@gmail.com"],
       callBackURLOnSuccess:"http://localhost:4200/",
       amountExpected: [""],
       notificationURL: ["https://66f2-105-29-165-231.ngrok-free.app/api/pesaflow/notification-url"],
